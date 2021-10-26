@@ -16,17 +16,23 @@ public class PaddleMovement : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    private Vector2 screenBounds;
+    private float spriteHalfWidth;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         paddleCurrentMoveSpeed = paddleStartMoveSpeed;
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,Screen.height,Camera.main.transform.position.z));
+        spriteHalfWidth = GetComponent<SpriteRenderer>().bounds.size.x / 2;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {     
         CheckForMovement();
+        ClampPaddleToScreen();
     }
 
     void CheckForMovement()
@@ -39,5 +45,12 @@ public class PaddleMovement : MonoBehaviour
 
         if(Mathf.Abs(direction) <= 0.1f)    paddleCurrentMoveSpeed = paddleStartMoveSpeed;
 
+    }
+
+    void ClampPaddleToScreen()
+    {
+        Vector2 currentPos = rb.position;
+        currentPos.x = Mathf.Clamp(currentPos.x,screenBounds.x + spriteHalfWidth,(screenBounds.x * -1)  - spriteHalfWidth);
+        transform.position = currentPos;
     }
 }
