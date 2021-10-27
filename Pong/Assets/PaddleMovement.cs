@@ -14,6 +14,9 @@ public class PaddleMovement : MonoBehaviour
     [SerializeField]
     private float maxPaddleSpeed;
 
+    [SerializeField]
+    private float wallCollisionOffset;
+
     private Rigidbody2D rb;
 
     private Vector2 screenBounds;
@@ -50,7 +53,7 @@ public class PaddleMovement : MonoBehaviour
     void ClampPaddleToScreen()
     {
         Vector2 currentPos = rb.position;
-        currentPos.x = Mathf.Clamp(currentPos.x,screenBounds.x + spriteHalfWidth,(screenBounds.x * -1)  - spriteHalfWidth);
+        currentPos.x = Mathf.Clamp(currentPos.x,screenBounds.x + spriteHalfWidth + wallCollisionOffset,(screenBounds.x * -1)  - spriteHalfWidth - wallCollisionOffset);
         transform.position = currentPos;
     }
 }
