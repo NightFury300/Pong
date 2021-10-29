@@ -56,4 +56,14 @@ public class PaddleMovement : MonoBehaviour
         currentPos.x = Mathf.Clamp(currentPos.x,screenBounds.x + spriteHalfWidth + wallCollisionOffset,(screenBounds.x * -1)  - spriteHalfWidth - wallCollisionOffset);
         transform.position = currentPos;
     }
+
+    public float GetSpriteLeft()
+    {
+        return transform.position.x - spriteHalfWidth;
+    }
+
+    public float GetSpriteRight()
+    {
+        return transform.position.x + spriteHalfWidth;
+    }
 }
